@@ -1,0 +1,614 @@
+{
+    "id": 433393,
+    "nameZh": "人工智能创新班221",
+    "nameEn": null,
+    "code": "0404913.001",
+    "remark": "计算机系",
+    "requiredPeriodInfo": {
+        "total": 64.0,
+        "weeks": 16,
+        "theory": 48.0,
+        "theoryUnit": "HOUR",
+        "requireTheory": 48.0,
+        "practice": null,
+        "practiceUnit": null,
+        "requirePractice": null,
+        "focusPractice": null,
+        "focusPracticeUnit": null,
+        "dispersedPractice": null,
+        "test": null,
+        "testUnit": null,
+        "requireTest": null,
+        "experiment": null,
+        "experimentUnit": null,
+        "requireExperiment": null,
+        "machine": 16.0,
+        "machineUnit": "HOUR",
+        "requireMachine": 16.0,
+        "design": null,
+        "designUnit": null,
+        "requireDesign": null,
+        "periodsPerWeek": 4.0,
+        "extra": null,
+        "extraUnit": null,
+        "requireExtra": null
+    },
+    "actualPeriods": 64,
+    "scheduleText": {
+        "dateTimeText": {
+            "textZh": "4~6,8~10,12~14(双)周 周三 第九节~第十节; \n1~16周 周五 第六节~第八节",
+            "textEn": "4~6,8~10,12~14(Even) Week Wed. ninth~tenth; \n1~16 Week Fri. sixth~eighth",
+            "text": "4~6,8~10,12~14(双)周 周三 第九节~第十节; \n1~16周 周五 第六节~第八节"
+        },
+        "dateTimePlaceText": {
+            "textZh": "4~6,8~10,12~14(双)周 周三 第九节~第十节; \n1~16周 周五 第六节~第八节 呈贡校区 西北B101",
+            "textEn": "4~6,8~10,12~14(Even) Week Wed. ninth~tenth; \n1~16 Week Fri. sixth~eighth Home,西北B101",
+            "text": "4~6,8~10,12~14(双)周 周三 第九节~第十节; \n1~16周 周五 第六节~第八节 呈贡校区 西北B101"
+        },
+        "dateTimePlacePersonText": {
+            "textZh": "4~6,8~10,12~14(双)周 周三 第九节~第十节 王路路; \n1~16周 周五 第六节~第八节 呈贡校区 西北B101 王路路",
+            "textEn": "4~6,8~10,12~14(Even) Week Wed. ninth~tenth Wang Lu Lu; \n1~16 Week Fri. sixth~eighth Home,西北B101 Wang Lu Lu",
+            "text": "4~6,8~10,12~14(双)周 周三 第九节~第十节 王路路; \n1~16周 周五 第六节~第八节 呈贡校区 西北B101 王路路"
+        },
+        "roomSeatText": {
+            "textZh": "西北B101(124)",
+            "textEn": "西北B101(124)",
+            "text": "西北B101(124)"
+        }
+    },
+    "stdCount": 29,
+    "limitCount": 31,
+    "retakeCount": 1,
+    "reserveCount": 0,
+    "suggestScheduleWeeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+    ],
+    "calcRelatedAdminclasses": true,
+    "allowMakeup": false,
+    "expActualPeriods": 0,
+    "needAssign": false,
+    "auto": false,
+    "scheduleRemark": null,
+    "enforce": false,
+    "arrangeExamType": null,
+    "lessonKind": "FOLLOW_RETAKE",
+    "selectionRemark": null,
+    "generateSeatNumber": false,
+    "actualTheoryPeriod": 48,
+    "actualPracticePeriod": 0,
+    "actualTestPeriod": 0,
+    "actualExperimentPeriod": 0,
+    "actualMachinePeriod": 16,
+    "actualDesignPeriod": 0,
+    "timeTableLayout": {
+        "id": 21,
+        "nameZh": "昆明理工大学作息时间",
+        "nameEn": "Time Table",
+        "enabled": true
+    },
+    "bizType": {
+        "id": 2,
+        "nameZh": "本科",
+        "nameEn": "Undergraduate"
+    },
+    "semester": {
+        "id": 282,
+        "nameZh": "2023-2024-1",
+        "nameEn": "2023-2024-1",
+        "code": "20241",
+        "calendar": {
+            "id": 1,
+            "nameZh": "教学日历",
+            "nameEn": "test"
+        },
+        "schoolYear": "2023-2024",
+        "startDate": "2023-09-11",
+        "endDate": "2024-01-14",
+        "weekStartOnSunday": false,
+        "countInTerm": true,
+        "season": "AUTUMN",
+        "enabled": true,
+        "fileInfo": null
+    },
+    "course": {
+        "id": 17032,
+        "nameZh": "数据结构与算法设计",
+        "nameEn": "Data structure and algorithm design",
+        "code": "0404913",
+        "periodInfo": {
+            "total": 64.0,
+            "weeks": 16,
+            "theory": 48.0,
+            "theoryUnit": "HOUR",
+            "requireTheory": 48.0,
+            "practice": null,
+            "practiceUnit": null,
+            "requirePractice": null,
+            "focusPractice": null,
+            "focusPracticeUnit": null,
+            "dispersedPractice": null,
+            "test": null,
+            "testUnit": null,
+            "requireTest": null,
+            "experiment": null,
+            "experimentUnit": null,
+            "requireExperiment": null,
+            "machine": 16.0,
+            "machineUnit": "HOUR",
+            "requireMachine": 16.0,
+            "design": null,
+            "designUnit": null,
+            "requireDesign": null,
+            "periodsPerWeek": 4.0,
+            "extra": null,
+            "extraUnit": null,
+            "requireExtra": null
+        },
+        "stageInfo": {
+            "stage": false,
+            "stageNum": null,
+            "stageGrantNum": null
+        },
+        "credits": 4.0,
+        "calculateGp": true,
+        "theory": true,
+        "experiment": false,
+        "practice": false,
+        "test": false,
+        "machine": true,
+        "design": false,
+        "extra": false,
+        "enabled": true,
+        "extraCredits": null,
+        "remark": null,
+        "flags": [],
+        "flag": null,
+        "education": {
+            "nameZh": "本科",
+            "nameEn": "Undergraduate",
+            "id": 3,
+            "code": "05",
+            "enabled": true,
+            "bizTypeAssocs": [
+                1,
+                2
+            ],
+            "bizTypeIds": [
+                1,
+                2
+            ],
+            "transient": false,
+            "name": "本科"
+        },
+        "courseType": {
+            "nameZh": "专业教育类",
+            "nameEn": "专业教育类",
+            "id": 159,
+            "code": "00018",
+            "enabled": true,
+            "bizTypeAssocs": [
+                2
+            ],
+            "bizTypeIds": [
+                2
+            ],
+            "transient": false,
+            "name": "专业教育类"
+        },
+        "defaultOpenDepart": {
+            "id": 255,
+            "nameZh": "信息工程与自动化学院",
+            "nameEn": "Faculty of Information Engineering and Automation",
+            "code": "04",
+            "abbrZh": "信自学院",
+            "abbrEn": null,
+            "college": true,
+            "research": false,
+            "openCourse": true,
+            "experiment": false,
+            "telephone": "0871-65916600；0871-65916609",
+            "address": null,
+            "indexNo": 4,
+            "recruitTypeSet": [
+                "UNDERGRADUATE"
+            ],
+            "recruitTypes": "UNDERGRADUATE",
+            "schoolDepartCode": "004104"
+        },
+        "grantCourseLevel": null,
+        "defaultExamMode": {
+            "nameZh": "考试",
+            "nameEn": "Paper exam",
+            "id": 1,
+            "code": "1",
+            "enabled": true,
+            "bizTypeAssocs": [
+                2
+            ],
+            "bizTypeIds": [
+                2
+            ],
+            "transient": false,
+            "name": "考试"
+        },
+        "defaultPreCourses": [],
+        "belongBizType": {
+            "id": 2,
+            "nameZh": "本科",
+            "nameEn": "Undergraduate"
+        },
+        "suitableBizTypes": [
+            {
+                "id": 2,
+                "nameZh": "本科",
+                "nameEn": "Undergraduate"
+            }
+        ],
+        "mngtDepartment": {
+            "id": 255,
+            "nameZh": "信息工程与自动化学院",
+            "nameEn": "Faculty of Information Engineering and Automation",
+            "code": "04",
+            "abbrZh": "信自学院",
+            "abbrEn": null,
+            "college": true,
+            "research": false,
+            "openCourse": true,
+            "experiment": false,
+            "telephone": "0871-65916600；0871-65916609",
+            "address": null,
+            "indexNo": 4,
+            "recruitTypeSet": [
+                "UNDERGRADUATE"
+            ],
+            "recruitTypes": "UNDERGRADUATE",
+            "schoolDepartCode": "004104"
+        },
+        "teachLang": {
+            "nameZh": "中文",
+            "nameEn": "china",
+            "id": 1,
+            "code": "001",
+            "enabled": true,
+            "bizTypeAssocs": [
+                2
+            ],
+            "bizTypeIds": [
+                2
+            ],
+            "transient": false,
+            "name": "中文"
+        },
+        "minorCourses": [],
+        "tags": null,
+        "lessonType": "理论课 上机课 ",
+        "seasons": [],
+        "suitMajors": [],
+        "courseTaxon": null,
+        "courseProperty": {
+            "nameZh": "理论教学",
+            "nameEn": "1",
+            "id": 22,
+            "code": "06",
+            "enabled": true,
+            "bizTypeAssocs": [
+                2
+            ],
+            "bizTypeIds": [
+                2
+            ],
+            "transient": false,
+            "name": "理论教学"
+        },
+        "openResearchDepartment": null,
+        "defaultOpenMajor": null,
+        "courseManager": null,
+        "courseSpec": null
+    },
+    "preCourses": [],
+    "courseType": {
+        "nameZh": "专业教育类",
+        "nameEn": "专业教育类",
+        "id": 159,
+        "code": "00018",
+        "enabled": true,
+        "bizTypeAssocs": [
+            2
+        ],
+        "bizTypeIds": [
+            2
+        ],
+        "transient": false,
+        "name": "专业教育类"
+    },
+    "openDepartment": {
+        "id": 255,
+        "nameZh": "信息工程与自动化学院",
+        "nameEn": "Faculty of Information Engineering and Automation",
+        "code": "04",
+        "abbrZh": "信自学院",
+        "abbrEn": null,
+        "college": true,
+        "research": false,
+        "openCourse": true,
+        "experiment": false,
+        "telephone": "0871-65916600；0871-65916609",
+        "address": null,
+        "indexNo": 4,
+        "recruitTypeSet": [
+            "UNDERGRADUATE"
+        ],
+        "recruitTypes": "UNDERGRADUATE",
+        "schoolDepartCode": "004104"
+    },
+    "examMode": {
+        "nameZh": "考试",
+        "nameEn": "Paper exam",
+        "id": 1,
+        "code": "1",
+        "enabled": true,
+        "bizTypeAssocs": [
+            2
+        ],
+        "bizTypeIds": [
+            2
+        ],
+        "transient": false,
+        "name": "考试"
+    },
+    "courseProperty": {
+        "nameZh": "理论教学",
+        "nameEn": "1",
+        "id": 22,
+        "code": "06",
+        "enabled": true,
+        "bizTypeAssocs": [
+            2
+        ],
+        "bizTypeIds": [
+            2
+        ],
+        "transient": false,
+        "name": "理论教学"
+    },
+    "campus": {
+        "id": 1,
+        "nameZh": "呈贡校区",
+        "nameEn": "Home",
+        "code": "1",
+        "enabled": true
+    },
+    "teachLang": {
+        "nameZh": "中文",
+        "nameEn": "china",
+        "id": 1,
+        "code": "001",
+        "enabled": true,
+        "bizTypeAssocs": [
+            2
+        ],
+        "bizTypeIds": [
+            2
+        ],
+        "transient": false,
+        "name": "中文"
+    },
+    "roomType": {
+        "nameZh": "多媒体教室",
+        "nameEn": null,
+        "id": 11,
+        "code": "05",
+        "enabled": true,
+        "bizTypeAssocs": [
+            1,
+            2
+        ],
+        "bizTypeIds": [
+            1,
+            2
+        ],
+        "transient": false,
+        "name": "多媒体教室"
+    },
+    "suggestScheduleWeeksInfo": "1~16",
+    "scheduleWeeksInfo": "1~16周",
+    "teacherAssignmentList": [
+        {
+            "teacher": {
+                "id": 19521,
+                "code": "20220101",
+                "teaching": true,
+                "zaiZhi": true,
+                "hireType": "FORMAL",
+                "researchDirection": null,
+                "belongSeries": null,
+                "nameZh": null,
+                "department": {
+                    "id": 255,
+                    "nameZh": "信息工程与自动化学院",
+                    "nameEn": "Faculty of Information Engineering and Automation",
+                    "code": "04",
+                    "abbrZh": "信自学院",
+                    "abbrEn": null,
+                    "college": true,
+                    "research": false,
+                    "openCourse": true,
+                    "experiment": false,
+                    "telephone": "0871-65916600；0871-65916609",
+                    "address": null,
+                    "indexNo": 4,
+                    "recruitTypeSet": [
+                        "UNDERGRADUATE"
+                    ],
+                    "recruitTypes": "UNDERGRADUATE",
+                    "schoolDepartCode": "004104"
+                },
+                "person": {
+                    "id": null,
+                    "nameZh": "王路路",
+                    "nameEn": "Wang Lu Lu",
+                    "idCardNumber": null,
+                    "country": null,
+                    "contactInfo": {
+                        "email": null,
+                        "telephone": null,
+                        "mobile": null,
+                        "address": null,
+                        "postcode": null,
+                        "qq": null,
+                        "wechat": null,
+                        "emergencyContact": null,
+                        "emergencyPhone": null,
+                        "dormAddress": null,
+                        "dormPhone": null
+                    },
+                    "family": {
+                        "id": null,
+                        "nameZh": null,
+                        "nameEn": null,
+                        "personAssoc": null,
+                        "contactInfo": {
+                            "email": null,
+                            "telephone": null,
+                            "mobile": null,
+                            "address": null,
+                            "postcode": null,
+                            "qq": null,
+                            "wechat": null,
+                            "emergencyContact": null,
+                            "emergencyPhone": null,
+                            "dormAddress": null,
+                            "dormPhone": null
+                        },
+                        "members": []
+                    },
+                    "portrait": null,
+                    "gender": null,
+                    "idCardType": null,
+                    "birthday": null,
+                    "nation": null,
+                    "politicalVisage": null,
+                    "age": null,
+                    "nativePlace": null,
+                    "bank": null,
+                    "bankAccount": null,
+                    "trainStationChinaPlace": null,
+                    "trainStation": null,
+                    "healthStatus": null,
+                    "joinPartyDatePlace": null,
+                    "joinLeagueDatePlace": null,
+                    "residence": null,
+                    "residenceNature": null,
+                    "formerName": null,
+                    "namePinyin": null,
+                    "birthPlace": null,
+                    "remark": null,
+                    "studyExperiences": [],
+                    "workExperiences": [],
+                    "maritalStatus": null,
+                    "activeSoldier": null,
+                    "countryType": null,
+                    "backHomeNumber": null,
+                    "ancestralHome": null,
+                    "arrivalTime": null,
+                    "permanentResident": null,
+                    "religiousBelief": null,
+                    "graduatedSchool": null,
+                    "workCompany": null,
+                    "specialistPositionLevel": null,
+                    "leaderPositionLevel": null,
+                    "stdLeaders": null,
+                    "character": null,
+                    "hobby": null,
+                    "specialty": null,
+                    "workExperience": null,
+                    "volunteerExperience": null
+                },
+                "title": null,
+                "type": null,
+                "major": null,
+                "preEducation": null,
+                "degreeType": {
+                    "nameZh": "博士",
+                    "nameEn": "1003",
+                    "id": 103,
+                    "code": "1003",
+                    "enabled": true,
+                    "bizTypeAssocs": [
+                        1,
+                        2
+                    ],
+                    "bizTypeIds": [
+                        1,
+                        2
+                    ],
+                    "transient": false,
+                    "name": "博士"
+                }
+            },
+            "person": {
+                "id": 415037,
+                "nameZh": "王路路",
+                "nameEn": "Wang Lu Lu"
+            },
+            "role": "MAJOR",
+            "indexNo": 1,
+            "age": 31
+        }
+    ],
+    "scheduleStartWeek": 1,
+    "scheduleEndWeek": 16,
+    "scheduleCurrentWeek": 11,
+    "scheduleChangeWeeks": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+    ],
+    "planExamWeek": 17,
+    "adminclassIds": [
+        5541
+    ],
+    "minorCourse": null,
+    "tags": null,
+    "crossBizTypes": [],
+    "courseLevelRequireList": [],
+    "hasSchedule": false,
+    "compulsorys": [
+        "COMPULSORY"
+    ],
+    "courseStdCount": 29,
+    "teacherScheduleTextVms": [
+        {
+            "personId": 415037,
+            "teacherId": null,
+            "scheduleText": "1~16周"
+        }
+    ],
+    "lessonKindText": "跟班重修",
+    "compulsorysStr": "必修",
+    "courseQualityLevel": null,
+    "bigLesson": false,
+    "packLesson": false,
+    "teacherAssignmentStr": "王路路(20220101)",
+    "lessonKindZh": "跟班重修",
+    "lessonKindEn": "FOLLOW_RETAKE"
+}

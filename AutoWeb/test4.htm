@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  	<title>学生成绩单</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta content="width=1300, initial-scale=1,initial-scale=1.0,user-scalable=yes" name="viewport" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!--<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE" th:text="#{system.title}">教务系统</title>-->
+
+  <link rel="icon" href="http://cdn-kmust.supwisdom.com/integration/static/favicon.png" />
+  <script>
+    // 设置 context path, js会需要用
+    window.CONTEXT_PATH = '/integration';
+    window.CDN_PATH = 'http://cdn-kmust.supwisdom.com/integration';
+    window.LOCALE = 'zh';
+  </script>
+
+  <link rel="stylesheet" href="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/css/eams-ui.min.css?v=00010" />
+  <link rel="stylesheet" href="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/css/eams-ui-plugin.min.css?v=00010" />
+  <link rel="stylesheet" href="http://cdn-kmust.supwisdom.com/integration/static/helper/css/info-page.css?v=00006" />
+  <link rel="stylesheet" href="http://cdn-kmust.supwisdom.com/integration/static/helper/css/generate-template.css?v=00002" />
+  <link rel="stylesheet" href="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/css/default.css?v=00012" />
+  <link rel="stylesheet" href="http://cdn-kmust.supwisdom.com/integration/static/helper/css/scrollbar.css" />
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/js/html5shiv.min.js?v=00002"></script>
+  <script src="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/js/respond.min.js?v=00002"></script>
+  <![endif]-->
+
+  <script src="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/js/eams-ui.min.js?v=00016"></script>
+  <script src="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/js/eams-ui.zh.min.js?v=00002"></script>
+  <script src="http://cdn-kmust.supwisdom.com/integration/static/eams-ui/js/iconfont.js"></script>
+
+
+
+  <script type="text/javascript" src="http://cdn-kmust.supwisdom.com/integration/static/system/global-variable.js?v=00002"></script>
+  <script type="text/javascript" src="http://cdn-kmust.supwisdom.com/integration/static/helper/search-page-helper1.js?v=00003"></script>
+  <script type="text/javascript" src="http://cdn-kmust.supwisdom.com/integration/static/helper/notIndex-page-helper.js?v=00003"></script>
+  <script type="text/javascript" src="http://cdn-kmust.supwisdom.com/integration/static/helper/info-page.js?v=00005"></script>
+  <script type="text/javascript" src="http://cdn-kmust.supwisdom.com/integration/static/helper/student-selectize.js?v=00004"></script>
+  <script type="text/javascript" src="http://cdn-kmust.supwisdom.com/integration/static/helper/datatable-column-tools.js?v=00005"></script>
+  <script>
+    /*<![CDATA[*/
+    $(function () {
+      $("body").show(); //chrome中iframe白屏的hack处理
+
+      // 二开提供 sys.schoolName 大学名称
+      var schoolName = '\u6606\u660E\u7406\u5DE5\u5927\u5B66';
+      if (schoolName) {
+        globalVariable.schoolName = schoolName
+      }
+
+      $("input").attr("autocomplete","off");
+
+      var infoMessages = null;
+      if (!infoMessages) {
+        infoMessages = [];
+      }
+      $.each(infoMessages, function (index, message) {
+        new PNotify({
+          title: '消息',
+          text: message,
+          type: 'info',
+          delay: 1000
+        });
+      });
+
+        var successMessages = null;
+        if (!successMessages) {
+          successMessages = [];
+        }
+        $.each(successMessages, function (index, message) {
+          new PNotify({
+            title: '成功',
+            text: message,
+            type: 'success',
+            delay: 1000
+          });
+        });
+
+        var errorMessages = null;
+        if (!errorMessages) {
+          errorMessages = [];
+        }
+        $.each(errorMessages, function (index, message) {
+          new PNotify({
+            title: '错误',
+            text: message,
+            type: 'error',
+            delay: 5000
+          });
+        });
+
+        var noticeMessages = null;
+        if (!noticeMessages) {
+          noticeMessages = [];
+        }
+        $.each(noticeMessages, function (index, message) {
+          new PNotify({
+            title: '提示',
+            text: message,
+            type: 'notice',
+            delay: 1000
+          });
+        });
+
+        $(document).ajaxError(function (event, request) {
+
+          if (request.responseText && request.status == 200 && request.statusText == "parsererror") {
+            window.location.href = self.location.href;
+          }
+
+          if (!request.responseJSON) {
+            return;
+          }
+
+          var data = {};
+          var message = request.responseJSON.message;
+          if (request.responseJSON.errors && request.responseJSON.errors.length > 0) {
+            message = request.responseJSON.errors[0].defaultMessage;
+          }
+          data['errError'] = request.responseJSON.error;
+          data['errException'] = request.responseJSON.exception;
+          data['errMessage'] = message;
+          data['errPath'] = request.responseJSON.path;
+          data['errStatus'] = request.responseJSON.status;
+          data['errTimestamp'] = request.responseJSON.timestamp;
+          data['errTrace'] = request.responseJSON.trace;
+
+          new PNotify({
+            text: request.responseJSON.prompt,
+            type: 'error',
+            delay: 50000,
+            icon: false,
+            width: '350px',
+            min_height: '82px',
+            confirm: {
+              confirm: true,
+              align: 'right',
+              buttons: [
+                {
+                  text: '报告错误',
+                  addClass: "btn-sm",
+                  click: function () {
+                    $.post({
+                      url: window.CONTEXT_PATH +'/sys-error-msg/save',
+                      contentType: 'application/json',
+                      dataType: 'json',
+                      data: JSON.stringify(data),
+                      success: function (response) {
+                        if ($(".bootbox-alert").length == 0) {
+                          bootbox.alert(response.content);
+                        }
+                      }
+                    })
+                  }
+                }, {addClass: 'hide'}
+              ]
+            }
+          });
+
+        });
+
+      });
+
+      window.preventFromSubmitTwice = function ($form) {
+        $form.submit(function () {
+          $(this).submit(function () {
+            return false;
+          });
+          return true;
+        });
+      };
+      window.preventFromSubmitTwice($('#save-form'));
+
+      window.semesterURIUtil = function (originalUri, insertBefore, semesterId) {
+        var semesterPattern = "/semester/";
+        if (originalUri.indexOf(semesterPattern) != -1) {
+          // remove semester pattern
+          var semesterPatternStartAt = originalUri.indexOf(semesterPattern);
+          var semesterPatternEndAt = semesterPatternStartAt +
+              originalUri.substring(semesterPatternStartAt, originalUri.length).indexOf("/", semesterPattern.length);
+          originalUri = originalUri.substring(0, semesterPatternStartAt) + originalUri.substring(semesterPatternEndAt, originalUri.length);
+        }
+        var appendIndex = originalUri.indexOf(insertBefore);
+        return originalUri.substring(0, appendIndex) + semesterPattern + semesterId + originalUri.substring(appendIndex, originalUri.length);
+      };
+      document.ondrop = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+    $.validator.addMethod("mobile", function (value, element) {
+        if (/^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/.test(value) || /^1[3456789][0-9]\d{8}$/.test(value)) {
+            return true;
+        }
+        return false;
+    }, "请输入正确的手机号");
+
+
+    $.validator.addMethod('noBlank', function (value, element, params) {
+      return !/\s+/g.test(value)
+    }, '不能有空格');
+
+      //    eamsUiUtil.cascadeScrollParentWindowToTop(window);
+      /*]]>*/
+    </script>
+  	<style>
+    .student-grade-table > tbody > tr > td {
+      vertical-align: middle;
+    }
+  </style>
+
+  </head>
+
+  <body style="display:none;">
+<div class="container-fluid">
+
+  
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>2022-2023-1</h3>
+      </div>
+      <div class="col-sm-12">
+        <table class="student-grade-table table table-bordered table-striped table-hover table-condensed">
+          <thead>
+          <tr>
+            <th width="25%">课程名称</th>
+            <th width="10%">课程代码</th>
+            <th width="10%">课程类别一</th>
+            <th width="10%">课程类别二</th>
+            <th width="10%">教学班代码</th>
+            <th width="6%">成绩</th>
+            <th width="6%">学分</th>
+            <th width="6%">绩点</th>
+            <th width="6%">学分绩点</th>
+            <th width="6%">修读性质</th>
+            <th width="5%">备注</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              体育(1)
+              <sup class="text-muted"></sup>
+            </td>
+            <td>3200001</td>
+            <td>必修课</td>
+            <td>体育课</td>
+            <td>3200001.113</td>
+            
+              
+                <td>87</td>
+              
+              
+              <td>0.0</td>
+              <td>3.7</td>
+            
+            
+            <td>0.0</td>
+            <td>初修</td>
+            <td>体育学院申请录入</td>
+          </tr>
+          <tr>
+            <td>
+              高等数学A(1)
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1106001</td>
+            <td>必修课</td>
+            <td>数学类</td>
+            <td>1106001.045</td>
+            
+              
+                <td>87</td>
+              
+              
+              <td>6.0</td>
+              <td>3.7</td>
+            
+            
+            <td>22.2</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              普通化学A
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1103245</td>
+            <td>必修课</td>
+            <td>化学类</td>
+            <td>1103245.005</td>
+            
+              
+                <td>85</td>
+              
+              
+              <td>3.0</td>
+              <td>3.7</td>
+            
+            
+            <td>11.1</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              入学教育
+              <sup class="text-muted"></sup>
+            </td>
+            <td>7101001</td>
+            <td>必修课</td>
+            <td>心理健康课</td>
+            <td></td>
+            
+              
+                <td>96</td>
+              
+              
+              <td>1.0</td>
+              <td>4</td>
+            
+            
+            <td>4</td>
+            <td>初修</td>
+            <td>学生处申请录入</td>
+          </tr>
+          <tr>
+            <td>
+              大学生心理健康与成长成才(1)
+              <sup class="text-muted"></sup>
+            </td>
+            <td>7101003</td>
+            <td>必修课</td>
+            <td>心理健康课</td>
+            <td>7101003.009</td>
+            
+              
+                <td>87</td>
+              
+              
+              <td>1.0</td>
+              <td>3.7</td>
+            
+            
+            <td>3.7</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              军事技能
+              <sup class="text-muted"></sup>
+            </td>
+            <td>7102002</td>
+            <td>必修课</td>
+            <td>军事理论技能课</td>
+            <td></td>
+            
+              
+                <td>79</td>
+              
+              
+              <td>2.0</td>
+              <td>3</td>
+            
+            
+            <td>6</td>
+            <td>初修</td>
+            <td>武装部申请录入</td>
+          </tr>
+          <tr>
+            <td>
+              军事理论
+              <sup class="text-muted"></sup>
+            </td>
+            <td>7102001</td>
+            <td>必修课</td>
+            <td>军事理论技能课</td>
+            <td></td>
+            
+              
+                <td>90</td>
+              
+              
+              <td>2.0</td>
+              <td>4</td>
+            
+            
+            <td>8</td>
+            <td>初修</td>
+            <td>武装部申请录入</td>
+          </tr>
+          <tr>
+            <td>
+              大学英语（1）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1903441</td>
+            <td>必修课</td>
+            <td>四选一（英语类）</td>
+            <td>1903441.004</td>
+            
+              
+                <td>91</td>
+              
+              
+              <td>3.0</td>
+              <td>4</td>
+            
+            
+            <td>12</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              普通化学实验A
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1101012</td>
+            <td>必修课</td>
+            <td>化学类</td>
+            <td>1101012.034</td>
+            
+              
+                <td>86</td>
+              
+              
+              <td>0.5</td>
+              <td>3.7</td>
+            
+            
+            <td>1.85</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              大学计算机—计算思维
+              <sup class="text-muted"></sup>
+            </td>
+            <td>3102022</td>
+            <td>必修课</td>
+            <td>信息类</td>
+            <td>3102022.020</td>
+            
+              
+                <td>96</td>
+              
+              
+              <td>2.0</td>
+              <td>4</td>
+            
+            
+            <td>8</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              形势与政策（1）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>5300106</td>
+            <td>必修课</td>
+            <td>必修类</td>
+            <td>5300106.011</td>
+            
+              
+                <td>89</td>
+              
+              
+              <td>0.0</td>
+              <td>3.7</td>
+            
+            
+            <td>0.0</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              权利侵害与救济（模块二社会）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>8212020</td>
+            <td>选修课</td>
+            <td>社会发展与世界视野模块</td>
+            <td>8212020.002</td>
+            
+              
+                <td>92</td>
+              
+              
+              <td>2.0</td>
+              <td>4</td>
+            
+            
+            <td>8</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              地矿学科群前沿讲座
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0102020</td>
+            <td>必修课</td>
+            <td>必修课</td>
+            <td>0102020.005</td>
+            
+              
+                <td>92</td>
+              
+              
+              <td>2.0</td>
+              <td>4</td>
+            
+            
+            <td>8</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              思想道德与法治
+              <sup class="text-muted"></sup>
+            </td>
+            <td>5303004</td>
+            <td>必修课</td>
+            <td>必修类</td>
+            <td>5303004.016</td>
+            
+              
+                <td>74</td>
+              
+              
+              <td>2.5</td>
+              <td>2.3</td>
+            
+            
+            <td>5.75</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              工程制图（一）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0304101</td>
+            <td>必修课</td>
+            <td>图学类</td>
+            <td>0304101.019</td>
+            
+              
+                <td>78</td>
+              
+              
+              <td>4.0</td>
+              <td>3</td>
+            
+            
+            <td>12</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              习近平新时代中国特色社会主义思想概论
+              <sup class="text-muted"></sup>
+            </td>
+            <td>5303006</td>
+            <td>必修课</td>
+            <td>必修类</td>
+            <td>5303006.012</td>
+            
+              
+                <td>89</td>
+              
+              
+              <td>3.0</td>
+              <td>3.7</td>
+            
+            
+            <td>11.1</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+    </div>
+
+  
+
+  
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>2022-2023-2</h3>
+      </div>
+      <div class="col-sm-12">
+        <table class="student-grade-table table table-bordered table-striped table-hover table-condensed">
+          <thead>
+          <tr>
+            <th width="25%">课程名称</th>
+            <th width="10%">课程代码</th>
+            <th width="10%">课程类别一</th>
+            <th width="10%">课程类别二</th>
+            <th width="10%">教学班代码</th>
+            <th width="6%">成绩</th>
+            <th width="6%">学分</th>
+            <th width="6%">绩点</th>
+            <th width="6%">学分绩点</th>
+            <th width="6%">修读性质</th>
+            <th width="5%">备注</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              体育(2)
+              <sup class="text-muted"></sup>
+            </td>
+            <td>3202002</td>
+            <td>必修课</td>
+            <td>体育课</td>
+            <td>3202002.039</td>
+            
+              
+                <td>78</td>
+              
+              
+              <td>2.0</td>
+              <td>3</td>
+            
+            
+            <td>6</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              高等数学A(2)
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1105003</td>
+            <td>必修课</td>
+            <td>数学类</td>
+            <td>1105003.004</td>
+            
+              
+                <td>76</td>
+              
+              
+              <td>5.0</td>
+              <td>2.7</td>
+            
+            
+            <td>13.5</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              线性代数
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1102328</td>
+            <td>必修课</td>
+            <td>数学类</td>
+            <td>1102328.020</td>
+            
+              
+                <td>92</td>
+              
+              
+              <td>2.0</td>
+              <td>4</td>
+            
+            
+            <td>8</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              地质学基础
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0104108</td>
+            <td>必修课</td>
+            <td>必修课</td>
+            <td>0104108.002</td>
+            
+              
+                <td>90</td>
+              
+              
+              <td>4.0</td>
+              <td>4</td>
+            
+            
+            <td>16</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              结晶学与矿物学
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0105703</td>
+            <td>必修课</td>
+            <td>必修课</td>
+            <td>0105703.001</td>
+            
+              
+                <td>76</td>
+              
+              
+              <td>5.0</td>
+              <td>2.7</td>
+            
+            
+            <td>13.5</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              工程测量
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0102714</td>
+            <td>必修课</td>
+            <td>必修课</td>
+            <td>0102714.002</td>
+            
+              
+                <td>87</td>
+              
+              
+              <td>2.0</td>
+              <td>3.7</td>
+            
+            
+            <td>7.4</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              大学生职业生涯规划
+              <sup class="text-muted"></sup>
+            </td>
+            <td>6601002</td>
+            <td>必修课</td>
+            <td>创新创业类</td>
+            <td>6601002.074</td>
+            
+              
+                <td>96</td>
+              
+              
+              <td>1.0</td>
+              <td>4</td>
+            
+            
+            <td>4</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              中国近现代史纲要
+              <sup class="text-muted"></sup>
+            </td>
+            <td>5303002</td>
+            <td>必修课</td>
+            <td>必修类</td>
+            <td>5303002.013</td>
+            
+              
+                <td>84</td>
+              
+              
+              <td>2.5</td>
+              <td>3.3</td>
+            
+            
+            <td>8.25</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              大学物理A(1)
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1105001</td>
+            <td>必修课</td>
+            <td>物理类</td>
+            <td></td>
+            
+              
+                <td>73</td>
+              
+              
+              <td>5.0</td>
+              <td>2.3</td>
+            
+            
+            <td>11.5</td>
+            <td>初修</td>
+            <td>成绩认定</td>
+          </tr>
+          <tr>
+            <td>
+              大学生心理健康与成长成才(2)
+              <sup class="text-muted"></sup>
+            </td>
+            <td>7101004</td>
+            <td>必修课</td>
+            <td>心理健康课</td>
+            <td>7101004.060</td>
+            
+              
+                <td>93</td>
+              
+              
+              <td>1.0</td>
+              <td>4</td>
+            
+            
+            <td>4</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              大学英语（2）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1903442</td>
+            <td>选修课</td>
+            <td>四选一（英语类）</td>
+            <td>1903442.056</td>
+            
+              
+                <td>92</td>
+              
+              
+              <td>3.0</td>
+              <td>4</td>
+            
+            
+            <td>12</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              物理实验（1）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>1101009</td>
+            <td>必修课</td>
+            <td>物理类</td>
+            <td>1101009.006</td>
+            
+              
+                <td>82</td>
+              
+              
+              <td>1.0</td>
+              <td>3.3</td>
+            
+            
+            <td>3.3</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              Python语言程序设计
+              <sup class="text-muted"></sup>
+            </td>
+            <td>3104010</td>
+            <td>必修课</td>
+            <td>信息类</td>
+            <td>3104010.004</td>
+            
+              
+                <td>89</td>
+              
+              
+              <td>4.0</td>
+              <td>3.7</td>
+            
+            
+            <td>14.8</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              形势与政策（2）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>5300107</td>
+            <td>必修课</td>
+            <td>必修类</td>
+            <td>5300107.017</td>
+            
+              
+                <td>96</td>
+              
+              
+              <td>0.0</td>
+              <td>4</td>
+            
+            
+            <td>0</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              社会主义发展史
+              <sup class="text-muted"></sup>
+            </td>
+            <td>5301004</td>
+            <td>选修课</td>
+            <td>四选一</td>
+            <td>5301004.006</td>
+            
+              
+                <td>94</td>
+              
+              
+              <td>1.0</td>
+              <td>4</td>
+            
+            
+            <td>4</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              工程制图（二）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0303102</td>
+            <td>必修课</td>
+            <td>图学类</td>
+            <td>0303102.015</td>
+            
+              
+                <td>84</td>
+              
+              
+              <td>3.0</td>
+              <td>3.3</td>
+            
+            
+            <td>9.9</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              矿物与人类健康（模块三科学）
+              <sup class="text-muted"></sup>
+            </td>
+            <td>8201004</td>
+            <td>选修课</td>
+            <td>科学探索与技术创新模块</td>
+            <td>8201004.002</td>
+            
+              
+                <td>95</td>
+              
+              
+              <td>2.0</td>
+              <td>4</td>
+            
+            
+            <td>8</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+    </div>
+
+  
+
+  
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>2022-2023-3</h3>
+      </div>
+      <div class="col-sm-12">
+        <table class="student-grade-table table table-bordered table-striped table-hover table-condensed">
+          <thead>
+          <tr>
+            <th width="25%">课程名称</th>
+            <th width="10%">课程代码</th>
+            <th width="10%">课程类别一</th>
+            <th width="10%">课程类别二</th>
+            <th width="10%">教学班代码</th>
+            <th width="6%">成绩</th>
+            <th width="6%">学分</th>
+            <th width="6%">绩点</th>
+            <th width="6%">学分绩点</th>
+            <th width="6%">修读性质</th>
+            <th width="5%">备注</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              初级程序设计课程设计
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0402702</td>
+            <td>必修课</td>
+            <td>专业实践课</td>
+            <td>0402702.001</td>
+            
+              
+                <td>91</td>
+              
+              
+              <td>2.0</td>
+              <td>4</td>
+            
+            
+            <td>8</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              人工智能专业应用认识实习
+              <sup class="text-muted"></sup>
+            </td>
+            <td>0401918</td>
+            <td>必修课</td>
+            <td>专业实践课</td>
+            <td>0401918.001</td>
+            
+              
+                <td>良</td>
+              
+              
+              <td>1.0</td>
+              <td>3.3</td>
+            
+            
+            <td>3.3</td>
+            <td>初修</td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+    </div>
+
+  
+</div>
+
+<script>
+  /*<![CDATA[*/
+  /*]]>*/
+</script>
+</body>
+  <script>
+    /*<![CDATA[*/
+    $(function () {
+      $.each($(".selectized"), function () {
+        var _self = this;
+        if ($(_self)[0].tagName == 'SELECT') {
+          $(_self)[0].selectize.on('focus', function () {
+            if ($(_self)[0].selectize.getValue() == '') {
+              $(_self)[0].selectize.clear();
+            }
+          });
+        }
+      });
+
+      //更换主题
+      var changeTheme = function () {
+        function _replaceFiles(themeName) {
+          var href = window.CONTEXT_PATH + '/static/eams-ui/' + themeName;
+          var cssArray = ['eams-ui.min.css', 'eams-ui-home.min.css', 'eams-ui-plugin.min.css', 'eams-ui.css', 'eams-ui-home.css', 'eams-ui-plugin.css'];
+          $.each(cssArray, function (index, item) {
+            var $ele = $("link[href*='" + item + "']");
+            if (!$ele.length) {
+              return true;
+            }
+            var node = document.createElement("link");
+            node.rel = 'stylesheet';
+            node.href = href + '/' + item + '?v=' + Math.floor(Math.random() * 100000);
+            $ele.after(node);
+            setTimeout(function () {
+              $ele.remove();
+            }, 3000);
+          });
+        }
+
+        function _replaceBgImg(themeName) {
+          $(".theme-bgimg").attr("data-theme", themeName);
+          $(".pure-li[data-theme=" + themeName + "]").addClass("active").siblings().removeClass("active");
+        }
+
+        var themeName = localStorage.getItem("theme");
+
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器
+        var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+        var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+
+        if (themeName) {
+          var themeArr = ['theme1', 'theme2', 'theme3', 'theme4', 'theme5', 'theme6'];
+
+          if (themeArr.indexOf(themeName) === -1) {
+            localStorage.removeItem('theme');//清除不匹配的
+            $(".theme-bgimg").attr("data-theme", "theme1");
+            $(".pure-li[data-theme='theme1']").addClass("active");
+            return;
+          }
+
+          if (!isIE && !isIE11) {
+            _replaceFiles(themeName);
+          }
+          _replaceBgImg(themeName);
+        } else {
+          $(".theme-bgimg").attr("data-theme", "theme1");
+          $(".pure-li[data-theme='theme1']").addClass("active");
+        }
+      };
+      changeTheme();
+
+      window.addEventListener('storage', function (e) {
+        if ('theme' === e.key) {
+          changeTheme();
+        }
+      });
+    });
+    /*]]>*/
+  </script>
+</html>
